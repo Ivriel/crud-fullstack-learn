@@ -10,3 +10,4 @@ export const users = pgTable('users', {
 });
 
 export type User = typeof users.$inferSelect;// biar tipe datanya dinamis. kalau langsung di define di parameter function, entar malah harus ganti satu satu
+export type UserInsert = typeof users.$inferInsert;
