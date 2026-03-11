@@ -8,17 +8,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { getUsers } from "@/server/users";
-import { Button } from "./ui/button";
-import { Pencil, Trash2 } from "lucide-react";
 import DeleteUserButton from "./delete-user-button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "./ui/dialog";
 import UserForm from "./forms/user-form";
 
 export default async function UsersTable() {
@@ -31,6 +21,7 @@ export default async function UsersTable() {
           <TableHead className="w-[100px]">Username</TableHead>
           <TableHead>Email</TableHead>
           <TableHead>Created At</TableHead>
+          <TableHead>Updated At</TableHead>
           <TableHead className="text-right">Actions</TableHead>
         </TableRow>
       </TableHeader>
@@ -39,23 +30,26 @@ export default async function UsersTable() {
           <TableRow key={user.id}>
             <TableCell className="font-medium">{user.username}</TableCell>
             <TableCell>{user.email}</TableCell>
-            <TableCell>{user.createdAt?.toLocaleString()}</TableCell>
+            <TableCell>
+              {user.createdAt?.toLocaleString('id-ID', {
+                day: '2-digit',
+                month: 'short',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false // Biar pakai format 24 jam (pake titik dua biasanya)
+              })}
+            </TableCell>
+            <TableCell>{user.updatedAt?.toLocaleString('id-ID', {
+              day: '2-digit',
+              month: 'short',
+              year: 'numeric',
+              hour: '2-digit',
+              minute: '2-digit',
+              hour12: false // Biar pakai format 24 jam (pake titik dua biasanya)
+            })}</TableCell>
             <TableCell className="text-right">
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button variant="ghost">
-                    <Pencil className="size-4" />
-                  </Button>
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle>Edit user {user.username}</DialogTitle>
-                    {/* pakai user buat populate datayang sudah ada buat diedit */}
-                    <UserForm user={user} />
-                  </DialogHeader>
-                </DialogContent>
-              </Dialog>
-
+              <UserForm user={user} />
               <DeleteUserButton userId={user.id} username={user.username} />
             </TableCell>
           </TableRow>

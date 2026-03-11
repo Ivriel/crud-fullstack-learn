@@ -2,11 +2,11 @@
 
 import { db } from "@/db/drizzle";
 import { UserInsert, users } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 
 export async function getUsers() {
     try {
-        const allUsers = await db.select().from(users);
+        const allUsers = await db.select().from(users).orderBy(desc(users.createdAt));
         return allUsers;
     } catch (error) {
         console.error(error);

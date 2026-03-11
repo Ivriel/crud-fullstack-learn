@@ -142,7 +142,7 @@ export default function UserForm({ user }: UserFormProps) {
               ) : user ? (
                 "Update User"
               ) : (
-                "Submit"
+                "Create User"
               )}
             </Button>
           </form>

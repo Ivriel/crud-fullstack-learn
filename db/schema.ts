@@ -6,7 +6,7 @@ export const users = pgTable('users', {
     username: text('username').notNull().unique(),
     password: text('password').notNull(),
     createdAt: timestamp('created_at').defaultNow(),
-    updatedAt: timestamp('updated_at').defaultNow(),
+    updatedAt: timestamp('updated_at').defaultNow().$onUpdate(() => new Date()),
 });
 
 export type User = typeof users.$inferSelect;// biar tipe datanya dinamis. kalau langsung di define di parameter function, entar malah harus ganti satu satu
